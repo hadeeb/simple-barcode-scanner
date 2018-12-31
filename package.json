@@ -1,0 +1,51 @@
+{
+  "name": "simple-barcode-scanner",
+  "version": "0.0.1",
+  "description": "Utility to read barcode from devices emulating a fast keyboard",
+  "main": "./dist/BarcodeScanner.js",
+  "module": "./es/index.js",
+  "typings": "./es/index.d.ts",
+  "files": [
+    "es",
+    "src",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hadeeb/simple-barcode-scanner.git"
+  },
+  "keywords": [
+    "simple",
+    "barcode",
+    "scanner",
+    "barcode-scanner",
+    "simple-barcode-scanner"
+  ],
+  "author": "Hadeeb Farhan <hadeebfarhan1@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hadeeb/simple-barcode-scanner/issues"
+  },
+  "homepage": "https://github.com/hadeeb/simple-barcode-scanner#readme",
+  "scripts": {
+    "build": "yarn build:es && yarn build:umd",
+    "build:umd": "rollup -c",
+    "build:es": "babel src --out-dir es --extensions '.ts'",
+    "postbuild": "yarn types && yarn size",
+    "size": "echo \"Gzipped Size: $(gzip-size $npm_package_main)\"",
+    "types": "tsc --lib dom,es2016 -d --emitDeclarationOnly --declarationDir es src/index.ts",
+    "prepublishOnly": "yarn build"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-typescript": "^7.1.0",
+    "gzip-size-cli": "^3.0.0",
+    "rollup": "^1.0.0",
+    "rollup-plugin-typescript": "^1.0.0",
+    "rollup-plugin-uglify": "^6.0.0",
+    "tslib": "^1.9.3",
+    "typescript": "^3.2.2"
+  }
+}
