@@ -1,42 +1,42 @@
 import { assign } from "./utils";
 
 export declare namespace BarcodeScanner {
-  export interface Option {
+  interface Option {
     /**
      * Max time duration (in ms) between consecutive inputs
      * @default 50
      */
-    latency: number;
+    latency?: number;
     /**
      * Min length of a valid barcode
      * @default 3
      */
-    minLength: number;
+    minLength?: number;
     /**
      * The HTML element to attach the event listener to
-     * @default document
+     * @default document.documentElement
      */
-    element: HTMLElement | Document;
+    element?: HTMLElement;
     /**
      * Array of keycodes indicating end of barcode
      * @default [8, 9, 13, 32, 34, 39, 40, 41, 43]
      */
-    endKeys: Array<number>;
+    endKeys?: Array<number>;
     /**
      * Regular expression to check for a valid key in barcode
      * @default /[a-zA-Z0-9-_+]/
      */
-    validKey: RegExp;
+    validKey?: RegExp;
     /**
      * Whether to prevent default action on completion of scanning
      * @default true
      */
-    preventDefault: Boolean;
+    preventDefault?: Boolean;
     /**
      * Whether to stop propagating event on completion of scanning
      * @default true
      */
-    stopPropagation: Boolean;
+    stopPropagation?: Boolean;
   }
 
   interface HandlerFunction {
@@ -46,13 +46,13 @@ export declare namespace BarcodeScanner {
     (code: string): void;
   }
 
-  export interface returnType {
+  interface Scanner {
     /**
      * Starts listening for barcode scans and add/replace the listener
      *
-     * @param {Function} func Function to call on completion of barcode scan
+     * @param {Function} handler Function to call on completion of barcode scan
      */
-    on: (func: HandlerFunction) => void;
+    on: (handler: HandlerFunction) => void;
 
     /**
      * Stop listening for barcode scans and remove the listener
@@ -66,13 +66,13 @@ export declare namespace BarcodeScanner {
  */
 export default function BarcodeScanner(
   options: BarcodeScanner.Option
-): BarcodeScanner.returnType {
+): BarcodeScanner.Scanner {
   let fun: Function = void 0;
   options = assign(
     {
       latency: 50,
       minLength: 3,
-      element: document,
+      element: document.documentElement,
       endKeys: [8, 9, 13, 32, 34, 39, 40, 41, 43],
       validKey: /[a-zA-Z0-9-_+]/,
       preventDefault: true,
@@ -108,8 +108,8 @@ export default function BarcodeScanner(
   }
 
   return {
-    on: function(func: Function) {
-      fun = func;
+    on: function(handler: Function) {
+      fun = handler;
       options.element.addEventListener("keydown", EventHandler, true);
     },
 
