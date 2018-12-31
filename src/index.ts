@@ -65,7 +65,7 @@ export declare namespace BarcodeScanner {
  * Simple JavaScript utility to listen for barcode scanners emulating keyboard
  */
 export default function BarcodeScanner(
-  options: BarcodeScanner.Option
+  options?: BarcodeScanner.Option
 ): BarcodeScanner.Scanner {
   let fun: Function = void 0;
   options = assign(
