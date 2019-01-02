@@ -20,13 +20,13 @@ export declare namespace BarcodeScanner {
     /**
      * Array of keys indicating end of barcode
      * @default ["Enter", "ArrowDown", "ArrowRight", "End"]
-     * for possible keys, check {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
+     * Refer {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
      */
     endKeys?: Array<string>;
     /**
      * Regular expression to check for a valid key in barcode
      * @default /^[a-zA-Z0-9]$/
-     * for possible keys, check {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
+     * Refer {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
      */
     validKey?: RegExp;
     /**
