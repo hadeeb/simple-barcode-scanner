@@ -1,0 +1,3 @@
+{
+  "compilerOptions": { "lib": ["dom", "es2016"] }
+}
