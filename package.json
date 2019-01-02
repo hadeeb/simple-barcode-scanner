@@ -1,6 +1,6 @@
 {
   "name": "simple-barcode-scanner",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Utility to read barcode from devices emulating a fast keyboard",
   "main": "./dist/BarcodeScanner.js",
   "module": "./es/index.js",
@@ -34,17 +34,21 @@
     "postbuild": "yarn types && yarn size",
     "size": "echo \"Gzipped Size: $(gzip-size $npm_package_main)\"",
     "types": "tsc --lib dom,es2016 -d --emitDeclarationOnly --declarationDir es src/index.ts",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-typescript": "^7.1.0",
+    "@types/jest": "^23.3.11",
     "gzip-size-cli": "^3.0.0",
+    "jest": "^23.6.0",
     "rollup": "^1.0.0",
     "rollup-plugin-typescript": "^1.0.0",
     "rollup-plugin-uglify": "^6.0.0",
+    "ts-jest": "^23.10.5",
     "tslib": "^1.9.3",
     "typescript": "^3.2.2"
   }
