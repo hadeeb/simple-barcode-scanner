@@ -18,13 +18,15 @@ export declare namespace BarcodeScanner {
      */
     element?: HTMLElement;
     /**
-     * Array of keycodes indicating end of barcode
-     * @default [8, 9, 13, 32, 34, 39, 40, 41, 43]
+     * Array of keys indicating end of barcode
+     * @default ["Enter", "ArrowDown", "ArrowRight", "End"]
+     * for possible keys, check {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
      */
-    endKeys?: Array<number>;
+    endKeys?: Array<string>;
     /**
      * Regular expression to check for a valid key in barcode
-     * @default /[a-zA-Z0-9-_+]/
+     * @default /^[a-zA-Z0-9]$/
+     * for possible keys, check {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
      */
     validKey?: RegExp;
     /**
@@ -73,8 +75,8 @@ export default function BarcodeScanner(
       latency: 50,
       minLength: 3,
       element: document.documentElement,
-      endKeys: [8, 9, 13, 32, 34, 39, 40, 41, 43],
-      validKey: /[a-zA-Z0-9-_+]/,
+      endKeys: ["Enter", "ArrowDown", "ArrowRight", "End"],
+      validKey: /^[a-zA-Z0-9]$/,
       preventDefault: true,
       stopPropagation: true
     },
@@ -84,27 +86,36 @@ export default function BarcodeScanner(
   let code: string = "";
 
   function EventHandler(e: KeyboardEvent): void {
-    const { keyCode } = e;
+    const { key } = e;
     const currTime = Date.now();
-
-    const input: string = String.fromCharCode(keyCode);
-    const isValid: Boolean = options.validKey.test(input);
-    const isEndKey = options.endKeys.includes(keyCode);
     const timeDiff = currTime - prevTime;
     prevTime = currTime;
+    // Ignore shift key
+    if (key === "Shift") return;
+
+    const isValid: Boolean = options.validKey.test(key);
+    const isEndKey = options.endKeys.includes(key);
 
     if (timeDiff > options.latency) {
+      // Maybe a normal key press or start of barcode
       if (!isEndKey && isValid) {
-        code = input;
+        code = key;
       } else code = "";
     } else if (isEndKey) {
+      // End of barcode
       if (code.length >= options.minLength) {
         fun && fun(code);
       }
       code = "";
       if (options.preventDefault) e.preventDefault();
       if (options.stopPropagation) e.stopPropagation();
-    } else if (isValid) code += input;
+    } else if (isValid) {
+      // Still scanning
+      code += key;
+    } else {
+      // Invalid character, reset
+      code = "";
+    }
   }
 
   return {

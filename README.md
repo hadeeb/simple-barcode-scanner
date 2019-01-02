@@ -78,13 +78,17 @@ Creates a simple function to listen to barcode scanners
 
     _default: `document.documentElement`_
 
-  - `endKeys` **Array&lt;number&gt;** Array of keycodes indicating end of barcode
+  - `endKeys` **Array&lt;string&gt;** Array of keys indicating end of barcode
 
-    _default: `[8, 9, 13, 32, 34, 39, 40, 41, 43]`_
+    Refer [Key Values | MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
+
+    _default: `["Enter", "ArrowDown", "ArrowRight", "End"]`_
 
   - `validKey` **RegExp** Regular expression to check for a valid key in barcode
 
-    _default: `/[a-zA-Z0-9-_+]/`_
+    Refer [Key Values | MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
+
+    _default: `/^[a-zA-Z0-9]$/`_
 
   - `preventDefault` **Boolean** Whether to prevent default action on completion of scanning
 
