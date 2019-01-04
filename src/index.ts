@@ -82,14 +82,13 @@ export default function BarcodeScanner(
     },
     options
   ) as BarcodeScanner.Option;
-  let prevTime: number = Date.now();
+  let prevTime: number = 0;
   let code: string = "";
 
   function EventHandler(e: KeyboardEvent): void {
-    const { key } = e;
-    const currTime = Date.now();
-    const timeDiff = currTime - prevTime;
-    prevTime = currTime;
+    const { key, timeStamp } = e;
+    const timeDiff = timeStamp - prevTime;
+    prevTime = timeStamp;
     // Ignore shift key
     if (key === "Shift") return;
 
