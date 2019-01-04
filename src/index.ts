@@ -105,10 +105,10 @@ export default function BarcodeScanner(
       // End of barcode
       if (code.length >= options.minLength) {
         fun && fun(code);
+        if (options.preventDefault) e.preventDefault();
+        if (options.stopPropagation) e.stopPropagation();
       }
       code = "";
-      if (options.preventDefault) e.preventDefault();
-      if (options.stopPropagation) e.stopPropagation();
     } else if (isValid) {
       // Still scanning
       code += key;
