@@ -101,18 +101,18 @@ export default function BarcodeScanner(
       if (!isEndKey && isValid) {
         code = key;
       } else code = "";
-    } else if (isEndKey) {
-      // End of barcode
-      if (code.length >= options.minLength) {
-        fun && fun(code);
-        if (options.preventDefault) e.preventDefault();
-        if (options.stopPropagation) e.stopPropagation();
-      }
-      code = "";
     } else if (isValid) {
       // Still scanning
       code += key;
     } else {
+      if (isEndKey) {
+        // End of barcode
+        if (code.length >= options.minLength) {
+          fun && fun(code);
+          if (options.preventDefault) e.preventDefault();
+          if (options.stopPropagation) e.stopPropagation();
+        }
+      }
       // Invalid character, reset
       code = "";
     }
