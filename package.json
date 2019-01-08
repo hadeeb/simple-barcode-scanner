@@ -43,6 +43,7 @@
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-typescript": "^7.1.0",
     "@types/jest": "^23.3.11",
+    "bluebird": "^3.5.3",
     "gzip-size-cli": "^3.0.0",
     "jest": "^23.6.0",
     "rollup": "^1.0.0",
