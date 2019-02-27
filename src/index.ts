@@ -69,7 +69,7 @@ export declare namespace BarcodeScanner {
 export default function BarcodeScanner(
   options?: BarcodeScanner.Option
 ): BarcodeScanner.Scanner {
-  let fun: Function = void 0;
+  let fun: Function;
   options = assign(
     {
       latency: 50,
@@ -107,7 +107,7 @@ export default function BarcodeScanner(
       if (isEndKey) {
         // End of barcode
         if (code.length >= options.minLength) {
-          fun && fun(code);
+          fun(code);
           if (options.preventDefault) e.preventDefault();
           if (options.stopPropagation) e.stopPropagation();
         }
@@ -119,12 +119,13 @@ export default function BarcodeScanner(
 
   return {
     on: function(handler: Function) {
+      options.element.removeEventListener("keydown", EventHandler, true);
       fun = handler;
-      options.element.addEventListener("keydown", EventHandler, true);
+      code = "";
+      fun && options.element.addEventListener("keydown", EventHandler, true);
     },
 
     off: function() {
-      fun = undefined;
       options.element.removeEventListener("keydown", EventHandler, true);
     }
   };
