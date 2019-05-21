@@ -1,5 +1,3 @@
-import { assign } from "./utils";
-
 export declare namespace BarcodeScanner {
   interface Option {
     /**
@@ -14,38 +12,29 @@ export declare namespace BarcodeScanner {
     minLength?: number;
     /**
      * The HTML element to attach the event listener to
-     * @default document.documentElement
+     * @default document
      */
     element?: HTMLElement;
     /**
      * Array of keys indicating end of barcode
-     * @default ["Enter", "ArrowDown", "ArrowRight", "End"]
+     * @default ["Enter"]
      * Refer {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
      */
     endKeys?: Array<string>;
     /**
      * Regular expression to check for a valid key in barcode
-     * @default /^[a-zA-Z0-9]$/
+     * @default /^\w$/
      * Refer {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
      */
     validKey?: RegExp;
-    /**
-     * Whether to prevent default action on completion of scanning
-     * @default true
-     */
-    preventDefault?: Boolean;
-    /**
-     * Whether to stop propagating event on completion of scanning
-     * @default true
-     */
-    stopPropagation?: Boolean;
   }
 
   interface HandlerFunction {
     /**
      * @param code Scanned barcode
+     * @param event Keyboard event from the end key
      */
-    (code: string): void;
+    (code: string, event: KeyboardEvent): void;
   }
 
   interface Scanner {
@@ -69,19 +58,17 @@ export declare namespace BarcodeScanner {
 export default function BarcodeScanner(
   options?: BarcodeScanner.Option
 ): BarcodeScanner.Scanner {
-  let fun: Function;
-  options = assign(
+  let fun: BarcodeScanner.HandlerFunction;
+  options = Object.assign(
     {
       latency: 50,
       minLength: 3,
-      element: document.documentElement,
-      endKeys: ["Enter", "ArrowDown", "ArrowRight", "End"],
-      validKey: /^[a-zA-Z0-9]$/,
-      preventDefault: true,
-      stopPropagation: true
+      element: document,
+      endKeys: ["Enter"],
+      validKey: /^\w$/
     },
     options
-  ) as BarcodeScanner.Option;
+  );
   let prevTime: number = 0;
   let code: string = "";
 
@@ -92,7 +79,7 @@ export default function BarcodeScanner(
     // Ignore shift key
     if (key === "Shift") return;
 
-    const isValid: Boolean = options.validKey.test(key);
+    const isValid = options.validKey.test(key);
     const isEndKey = options.endKeys.includes(key);
 
     if (timeDiff > options.latency) {
@@ -107,9 +94,7 @@ export default function BarcodeScanner(
       if (isEndKey) {
         // End of barcode
         if (code.length >= options.minLength) {
-          fun(code);
-          if (options.preventDefault) e.preventDefault();
-          if (options.stopPropagation) e.stopPropagation();
+          fun(code, e);
         }
       }
       // Invalid character, reset
@@ -118,7 +103,7 @@ export default function BarcodeScanner(
   }
 
   return {
-    on: function(handler: Function) {
+    on: function(handler: BarcodeScanner.HandlerFunction) {
       options.element.removeEventListener("keydown", EventHandler, true);
       fun = handler;
       code = "";

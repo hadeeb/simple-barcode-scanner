@@ -31,13 +31,13 @@ Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](http
 import BarcodeScanner from "simple-barcode-scanner";
 
 // using CommonJS modules
-var BarcodeScanner = require("simple-barcode-scanner").default;
+var BarcodeScanner = require("simple-barcode-scanner");
 ```
 
 The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
 
 ```html
-<script src="https://unpkg.com/simple-barcode-scanner/dist/BarcodeScanner.js"></script>
+<script src="https://unpkg.com/simple-barcode-scanner"></script>
 ```
 
 You can find the library on `window.BarcodeScanner`.
@@ -50,7 +50,10 @@ import BarcodeScanner from "simple-barcode-scanner";
 const scanner = BarcodeScanner();
 
 // Add a listener
-scanner.on(data => console.log(data));
+scanner.on((code, event) => {
+  event.preventDefault();
+  console.log(code);
+});
 
 // Remove the listener
 scanner.off();
@@ -76,27 +79,19 @@ Creates a simple function to listen to barcode scanners
 
   - `element` **HTMLElement** The HTML element to attach the event listener to
 
-    _default: `document.documentElement`_
+    _default: `document`_
 
   - `endKeys` **Array&lt;string&gt;** Array of keys indicating end of barcode
 
     Refer [Key Values | MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
 
-    _default: `["Enter", "ArrowDown", "ArrowRight", "End"]`_
+    _default: `["Enter"]`_
 
   - `validKey` **RegExp** Regular expression to check for a valid key in barcode
 
     Refer [Key Values | MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
 
-    _default: `/^[a-zA-Z0-9]$/`_
-
-  - `preventDefault` **Boolean** Whether to prevent default action on completion of scanning
-
-    _default: `true`_
-
-  - `stopPropagation` **Boolean** Whether to stop propagating event on completion of scanning
-
-    _default: `true`_
+    _default: `/^\w$/`_
 
 Returns **Scanner**
 
@@ -110,7 +105,7 @@ Returns **Scanner**
 
   - handler **Function** Function to call on completion of barcode scan
 
-    _Recieves the scanned code as the parameter_
+    _Recieves the scanned code and the keyboard event of the last input as the parameters_
 
 - #### off
   Stop listening for barcode scans and remove the listener

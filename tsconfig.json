@@ -1,3 +1,7 @@
 {
-  "compilerOptions": { "lib": ["dom", "es2016"] }
+  "compilerOptions": {
+    "lib": ["dom", "es2016"],
+    "declaration": true
+  },
+  "files": ["src/index.ts"]
 }

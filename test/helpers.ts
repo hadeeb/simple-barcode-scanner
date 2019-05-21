@@ -1,4 +1,5 @@
-import { delay } from "bluebird";
+const div = document.createElement("input");
+document.body.appendChild(div);
 
 export async function SimulateTyping(word: string, speed: number = 80) {
   for (let i = 0; i < word.length; i++) {
@@ -15,5 +16,9 @@ export async function SimulateTyping(word: string, speed: number = 80) {
 
 function keyPress(key: string) {
   let event = new KeyboardEvent("keydown", { key: key });
-  document.documentElement.dispatchEvent(event);
+  div.dispatchEvent(event);
+}
+
+function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

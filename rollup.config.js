@@ -1,14 +1,36 @@
-import typescript from "rollup-plugin-typescript";
-import { uglify } from "rollup-plugin-uglify";
+import typescript from "rollup-plugin-typescript2";
+import { terser } from "rollup-plugin-terser";
 
 const name = "BarcodeScanner";
 
-module.exports = {
-  input: "src/index.ts",
-  output: {
-    name: name,
-    file: `dist/${name}.js`,
-    format: "umd"
+export default [
+  {
+    input: "src/index.ts",
+    output: [
+      {
+        file: `dist/index.js`,
+        format: "cjs"
+      },
+      {
+        file: `dist/index.module.js`,
+        format: "es"
+      }
+    ],
+    plugins: [
+      typescript(),
+      terser({
+        toplevel: true,
+        module: true
+      })
+    ]
   },
-  plugins: [typescript(), uglify()]
-};
+  {
+    input: "src/index.ts",
+    output: {
+      name: name,
+      file: `dist/${name}.js`,
+      format: "umd"
+    },
+    plugins: [typescript(), terser()]
+  }
+];

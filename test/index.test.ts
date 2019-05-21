@@ -26,10 +26,10 @@ describe("Barcode scanner", () => {
     });
 
     it("should not fire when event occurs outside target tree", async () => {
+      const el = document.createElement("div");
+      document.body.appendChild(el);
       const scanner = Scanner({
-        element: document.body,
-        preventDefault: false,
-        stopPropagation: false
+        element: el
       });
       const spy = jest.fn();
       scanner.on(spy);
@@ -46,14 +46,14 @@ describe("Barcode scanner", () => {
       let code = "Hello";
       await SimulateTyping(code, 30);
       expect(spy).toBeCalledTimes(1);
-      expect(spy).toHaveBeenNthCalledWith(1, code);
+      expect(spy).toHaveBeenNthCalledWith(1, code, expect.any(KeyboardEvent));
       code = "12345csdveS";
       await SimulateTyping(code, 30);
       expect(spy).toBeCalledTimes(2);
-      expect(spy).toHaveBeenNthCalledWith(2, code);
+      expect(spy).toHaveBeenNthCalledWith(2, code, expect.any(KeyboardEvent));
       await SimulateTyping(code, 30);
       expect(spy).toBeCalledTimes(3);
-      expect(spy).toHaveBeenNthCalledWith(3, code);
+      expect(spy).toHaveBeenNthCalledWith(3, code, expect.any(KeyboardEvent));
       scanner.off();
     });
 
