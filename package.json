@@ -1,6 +1,6 @@
 {
   "name": "simple-barcode-scanner",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Utility to read barcode from devices emulating a fast keyboard",
   "unpkg": "./dist/BarcodeScanner.js",
   "main": "./dist/index.js",
