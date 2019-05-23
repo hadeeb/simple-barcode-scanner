@@ -2,7 +2,7 @@
 
 <a href="https://www.npmjs.org/package/simple-barcode-scanner"><img src="https://badgen.net/npm/v/simple-barcode-scanner" alt="npm"></a>
 <a href="https://github.com/hadeeb/simple-barcode-scanner/blob/master/LICENSE"><img src="https://badgen.net/github/license/hadeeb/simple-barcode-scanner/green" alt="license"></a>
-<a href="https://unpkg.com/simple-barcode-scanner/dist/BarcodeScanner.js"><img src="https://img.badgesize.io/https://unpkg.com/simple-barcode-scanner/dist/BarcodeScanner.js?compression=gzip" alt="gzip size"></a>
+<a href="https://unpkg.com/simple-barcode-scanner"><img src="https://img.badgesize.io/https://unpkg.com/simple-barcode-scanner?compression=gzip" alt="gzip size"></a>
 
 A simple JavaScript utility to read barcode from devices emulating a fast keyboard.
 
@@ -31,7 +31,7 @@ Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](http
 import BarcodeScanner from "simple-barcode-scanner";
 
 // using CommonJS modules
-var BarcodeScanner = require("simple-barcode-scanner");
+const BarcodeScanner = require("simple-barcode-scanner");
 ```
 
 The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
