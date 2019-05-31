@@ -31,12 +31,12 @@ export declare namespace BarcodeScanner {
      * Stop immediate propagation on key event
      * @default false
      */
-    stopPropagation: boolean;
+    stopPropagation?: boolean;
     /**
      * Prevent default action on key event
      * @default false
      */
-    preventDefault: boolean;
+    preventDefault?: boolean;
   }
 
   interface HandlerFunction {
