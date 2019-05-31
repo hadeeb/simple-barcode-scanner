@@ -27,6 +27,16 @@ export declare namespace BarcodeScanner {
      * Refer {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
      */
     validKey?: RegExp;
+    /**
+     * Stop immediate propagation on key event
+     * @default false
+     */
+    stopPropagation: boolean;
+    /**
+     * Prevent default action on key event
+     * @default false
+     */
+    preventDefault: boolean;
   }
 
   interface HandlerFunction {
@@ -65,7 +75,9 @@ export default function BarcodeScanner(
       minLength: 3,
       element: document,
       endKeys: ["Enter"],
-      validKey: /^\w$/
+      validKey: /^\w$/,
+      stopPropagation: false,
+      preventDefault: false
     },
     options
   );
@@ -73,6 +85,8 @@ export default function BarcodeScanner(
   let code: string = "";
 
   function EventHandler(e: KeyboardEvent): void {
+    if (options.stopPropagation) e.stopImmediatePropagation();
+    if (options.preventDefault) e.preventDefault();
     const { key, timeStamp } = e;
     const timeDiff = timeStamp - prevTime;
     prevTime = timeStamp;
