@@ -1,5 +1,6 @@
 import typescript from "rollup-plugin-typescript2";
 import { terser } from "rollup-plugin-terser";
+import pkg from "./package.json";
 
 const name = "BarcodeScanner";
 
@@ -8,11 +9,11 @@ export default [
     input: "src/index.ts",
     output: [
       {
-        file: `dist/index.js`,
+        file: pkg.main,
         format: "cjs"
       },
       {
-        file: `dist/index.module.js`,
+        file: pkg.module,
         format: "es"
       }
     ],
@@ -28,7 +29,7 @@ export default [
     input: "src/index.ts",
     output: {
       name: name,
-      file: `dist/${name}.js`,
+      file: pkg.unpkg,
       format: "umd"
     },
     plugins: [typescript(), terser()]
