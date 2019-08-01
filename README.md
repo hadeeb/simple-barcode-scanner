@@ -1,8 +1,8 @@
 # Barcode Scanner
 
-<a href="https://www.npmjs.org/package/simple-barcode-scanner"><img src="https://badgen.net/npm/v/simple-barcode-scanner" alt="npm"></a>
-<a href="https://github.com/hadeeb/simple-barcode-scanner/blob/master/LICENSE"><img src="https://badgen.net/github/license/hadeeb/simple-barcode-scanner/green" alt="license"></a>
-<a href="https://unpkg.com/simple-barcode-scanner"><img src="https://img.badgesize.io/https://unpkg.com/simple-barcode-scanner?compression=gzip" alt="gzip size"></a>
+[![npm](https://img.shields.io/npm/v/simple-barcode-scanner?color=orange)](https://www.npmjs.org/package/simple-barcode-scanner)
+[![license](https://img.shields.io/github/license/hadeeb/simple-barcode-scanner)](https://github.com/hadeeb/simple-barcode-scanner/blob/master/LICENSE)
+[![gzip size](https://img.shields.io/bundlephobia/minzip/simple-barcode-scanner)](https://unpkg.com/simple-barcode-scanner)
 
 A simple JavaScript utility to read barcode from devices emulating a fast keyboard.
 
@@ -41,6 +41,12 @@ The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https
 ```
 
 You can find the library on `window.BarcodeScanner`.
+
+## Browser support
+
+See [supported browsers](https://caniuse.com/#feat=keyboardevent-key).
+
+If you need to support older browsers, add a polyfill for [KeyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key).
 
 ## Usage
 
