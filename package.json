@@ -28,21 +28,15 @@
   "homepage": "https://github.com/hadeeb/simple-barcode-scanner#readme",
   "scripts": {
     "prebuild": "yarn test",
-    "build": "rollup -c",
-    "postbuild": "yarn size",
-    "size": "echo \"Gzipped Size: $(gzip-size $npm_package_module)\"",
+    "build": "microbundle",
     "prepublishOnly": "yarn build",
     "test": "jest --coverage"
   },
   "devDependencies": {
     "@types/jest": "^24.0.16",
-    "gzip-size-cli": "^3.0.0",
     "jest": "^24.8.0",
-    "rollup": "^1.17.0",
-    "rollup-plugin-terser": "^5.1.1",
-    "rollup-plugin-typescript2": "^0.22.1",
+    "microbundle": "^0.11.0",
     "ts-jest": "^24.0.2",
-    "tslib": "^1.10.0",
     "typescript": "^3.5.3"
   }
 }
