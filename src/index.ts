@@ -102,6 +102,7 @@ export default function BarcodeScanner(
         if (code.length >= options.minLength && !options.devicePrefix) {
           fun(code, e);
         } else if (code.length >= options.minLength && options.devicePrefix) {
+          // Check for device prefix
           if (code.includes(options.devicePrefix)) fun(code.slice(options.devicePrefix.length), e)
         }
       }
