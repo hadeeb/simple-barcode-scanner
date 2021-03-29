@@ -1,7 +1,7 @@
 const div = document.createElement("input");
 document.body.appendChild(div);
 
-export async function SimulateTyping(word: string, speed: number = 80) {
+export async function simulateTyping(word: string, speed: number = 80) {
   for (let i = 0; i < word.length; i++) {
     if (word.charAt(i) === word.charAt(i).toUpperCase()) {
       await delay(speed);
@@ -20,5 +20,5 @@ function keyPress(key: string) {
 }
 
 function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

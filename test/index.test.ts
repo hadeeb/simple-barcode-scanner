@@ -1,84 +1,79 @@
 import Scanner from "../src";
-import { SimulateTyping } from "./helpers";
+import { simulateTyping } from "./helpers";
 
 it("default export should be a function", () => {
   expect(Scanner).toBeInstanceOf(Function);
 });
 
 describe("Barcode scanner", () => {
-  it("should return an object with 2 functions", () => {
-    const scanner = Scanner();
-    expect(Object.keys(scanner)).toHaveLength(2);
-    expect(scanner).toHaveProperty("on");
-    expect(scanner).toHaveProperty("off");
-    expect(scanner.on).toBeInstanceOf(Function);
-    expect(scanner.off).toBeInstanceOf(Function);
+  it("should return a function", () => {
+    const cleanup = Scanner(() => {});
+    expect(cleanup).toBeInstanceOf(Function);
+    cleanup();
   });
 
   describe("handler", () => {
     it("should not fire on normal typing", async () => {
-      const scanner = Scanner();
       const spy = jest.fn();
-      scanner.on(spy);
+      const cleanup = Scanner(spy);
       let code = "Hello";
-      await SimulateTyping(code);
+      await simulateTyping(code);
       expect(spy).toBeCalledTimes(0);
+      cleanup();
     });
 
     it("should not fire when event occurs outside target tree", async () => {
       const el = document.createElement("div");
       document.body.appendChild(el);
-      const scanner = Scanner({
-        element: el
-      });
       const spy = jest.fn();
-      scanner.on(spy);
+      const cleanup = Scanner(spy, {
+        element: el,
+      });
+
       let code = "Hello";
-      await SimulateTyping(code, 30);
+      await simulateTyping(code, 30);
       expect(spy).toBeCalledTimes(0);
-      scanner.off();
+      cleanup();
     });
 
     it("should fire on barcode scan with correct value", async () => {
-      const scanner = Scanner();
       const spy = jest.fn();
-      scanner.on(spy);
+      const cleanup = Scanner(spy);
+
       let code = "Hello";
-      await SimulateTyping(code, 30);
+      await simulateTyping(code, 30);
       expect(spy).toBeCalledTimes(1);
       expect(spy).toHaveBeenNthCalledWith(1, code, expect.any(KeyboardEvent));
       code = "12345csdveS";
-      await SimulateTyping(code, 30);
+      await simulateTyping(code, 30);
       expect(spy).toBeCalledTimes(2);
       expect(spy).toHaveBeenNthCalledWith(2, code, expect.any(KeyboardEvent));
-      await SimulateTyping(code, 30);
+      await simulateTyping(code, 30);
       expect(spy).toBeCalledTimes(3);
       expect(spy).toHaveBeenNthCalledWith(3, code, expect.any(KeyboardEvent));
-      scanner.off();
+      cleanup();
     });
 
     it("should not fire on invalid code", async () => {
-      const scanner = Scanner();
       const spy = jest.fn();
-      scanner.on(spy);
+      const cleanup = Scanner(spy);
       let code = "Hell/o";
-      await SimulateTyping(code, 30);
+      await simulateTyping(code, 30);
       expect(spy).toBeCalledTimes(0);
       code = "av";
-      await SimulateTyping(code, 30);
+      await simulateTyping(code, 30);
       expect(spy).toBeCalledTimes(0);
-      scanner.off();
+      cleanup();
     });
 
     it("should not fire after removing the handler", async () => {
-      const scanner = Scanner();
       const spy = jest.fn();
-      scanner.on(spy);
+      const cleanup = Scanner(spy);
       let code = "Hello";
-      await SimulateTyping(code, 30);
+      await simulateTyping(code, 30);
       expect(spy).toBeCalledTimes(1);
-      scanner.off();
-      await SimulateTyping(code, 30);
+      cleanup();
+      await simulateTyping(code, 30);
       expect(spy).toBeCalledTimes(1);
     });
   });
