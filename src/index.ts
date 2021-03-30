@@ -27,6 +27,11 @@ export declare namespace BarcodeScanner {
      * Refer {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values Key Values | MDN}
      */
     validKey?: RegExp;
+    /**
+     * Barcode prefix string for device event filtering
+     * @default null
+     */
+    devicePrefix?: string | null;
   }
 
   interface HandlerFunction {
@@ -65,7 +70,8 @@ export default function BarcodeScanner(
       minLength: 3,
       element: document,
       endKeys: ["Enter"],
-      validKey: /^\w$/
+      validKey: /^\w$/,
+      devicePrefix: null
     },
     options
   );
@@ -93,8 +99,11 @@ export default function BarcodeScanner(
     } else {
       if (isEndKey) {
         // End of barcode
-        if (code.length >= options.minLength) {
+        if (code.length >= options.minLength && !options.devicePrefix) {
           fun(code, e);
+        } else if (code.length >= options.minLength && options.devicePrefix) {
+          // Check for device prefix
+          if (code.includes(options.devicePrefix)) fun(code.slice(options.devicePrefix.length), e)
         }
       }
       // Invalid character, reset

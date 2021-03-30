@@ -98,6 +98,10 @@ Creates a simple function to listen to barcode scanners
     Refer [Key Values | MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
 
     _default: `/^\w$/`_
+  
+  - `devicePrefix` **string** Barcode prefix string for device event filtering
+
+    _default: `null`_
 
 Returns **Scanner**
 
